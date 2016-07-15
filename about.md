@@ -4,12 +4,13 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+energyhelpline.com is an independent price comparison service which provides customers with fast, free and friendly advice on their best gas and electricity deal.  Every month we help thousands of households and businesses to find better energy packages and pay lower bills.
 
-### More Information
+We compare all major suppliers in the UK to help you find your best deal, and then take all the hassle out of switching with our simple online forms and contacting your new supplier.
 
-A place to include any other types of information that you'd like to include about yourself.
 
-### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+
+
+
+

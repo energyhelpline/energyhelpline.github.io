@@ -2,5 +2,6 @@
 layout: post
 title: You're up and running!
 ---
+Welcome to Energyhelpline Tech!
 
-This is the start of a new tech blog for energyhelpline.com
+This is the start of our tech blogging journey is about what we do and how we do it. It’s not glossy or shiny and isn’t meant as a sales job, but it might help inform you about some of the technology we use and give us an opportunity to bang our own drum about some of the things we are doing.
