@@ -3,7 +3,7 @@
 #
 
 # Name of your site (displayed in the header)
-name: EHL Tech Blog
+name: Energyhelpline Tech Blog
 
 # Short bio or description (displayed in the header)
 description: The Tech blog for energyhelpline
@@ -21,7 +21,7 @@ footer-links:
   email:
   facebook:
   flickr:
-  github: energyhelpline/energyhelpline.github.io
+  github: energyhelpline
   instagram:
   linkedin:
   pinterest:
