@@ -1,6 +1,6 @@
 ---
 layout: post
-title: You're up and running!
+title: We're up and running!
 ---
 Welcome to Energyhelpline Tech!
 
