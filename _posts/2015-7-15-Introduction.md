@@ -1,6 +1,7 @@
 ---
 layout: post
 title: We're up and running!
+author: EHL Development Team
 ---
 Welcome to Energyhelpline Tech!
 
