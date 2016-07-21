@@ -32,17 +32,19 @@ the class's fields and the class's methods; the most cohesive a class can is whe
 use the all fields, the least cohesive is when the all the method's use none of the fields.
 
 The most commonly used calculation method is the Lack of Cohesion of Methods (LCOM) which has
-the following formula
+the following formula:
 
-        1 - (sum(MF)/M*F)
+> 1 - (sum(MF)/M*F)
 
-where
+where:
 
-        M is the number of methods in the class
-        F is the number of fields in the class
-        MF is number of methods which access a given field of the class
+> M is the number of methods in the class
+>
+> F is the number of fields in the class
+>
+> MF is number of methods which access a given field of the class
         
-The result will be a value in the range 0 - 1, where 0 has high cohesive and 1 has no cohesion 
+The result will be a value in the range 0 - 1, where 0 has high cohesion and 1 has no cohesion 
 at all.
 
 ### Example LCOM Calculation
@@ -51,64 +53,67 @@ If, like me, you're not a maths gonk this can seems slightly daunting so I'll wa
 example and all should become clear.
 
 {% highlight c# %}
-    public class DiscountCalculator
+public class DiscountCalculator
+{
+    private string _customerName;
+    private CustomerStatus _customerStatus;
+    private decimal _total;
+
+    public DiscountCalculator(
+        string customerName, 
+        CustomerStatus customerStatus, 
+        decimal total)
+     {
+        _customerName = customerName;
+        _customerStatus = customerStatus;
+        _total = total;
+    }
+
+    public string FormattedTotal
     {
-        private string _customerName;
-        private CustomerStatus _customerStatus;
-        private decimal _total;
-
-        public DiscountCalculator(string customerName, CustomerStatus customerStatus, decimal total)
+        get
         {
-            _customerName = customerName;
-            _customerStatus = customerStatus;
-            _total = total;
-        }
+            var discount = GetDiscount();
+            var discountedTotal = _total - discount;
 
-        public string FormattedTotal
-        {
-            get
-            {
-                var discount = GetDiscount();
-                var discountedTotal = _total - discount;
-
-                return $"Total for {_customerName} is {FormatValue(discountedTotal)}" +
-                       $"with discount {FormatValue(discount)}";
-            }
-        }
-
-        private decimal GetDiscount()
-        {
-            decimal discountPercentage;
-
-            switch(_customerStatus)
-            {
-                case CustomerStatus.Standard:
-                    discountPercentage = 0.05m;
-                    break;
-                case CustomerStatus.CardHolder:
-                    discountPercentage = 0.1m;
-                    break;
-                case CustomerStatus.Gold:
-                    discountPercentage = 0.25m;
-                    break;
-                default:
-                    discountPercentage = 0m;
-                    break;
-            }
-
-            return _total * discountPercentage;
-        }
-
-        public static string FormatTaxAmount(decimal tax)
-        {
-            return $"Total tax is {FormatValue(tax)}";
-        }
-
-        private static string FormatValue(decimal value)
-        {
-            return value.ToString("C2");
+            return $"Total for {_customerName} is {FormatValue(discountedTotal)}" +
+                   $"with discount {FormatValue(discount)}";
         }
     }
+
+    private decimal GetDiscount()
+    {
+        decimal discountPercentage;
+
+        switch(_customerStatus)
+        {
+            case CustomerStatus.Standard:
+                discountPercentage = 0.05m;
+                break;
+            case CustomerStatus.CardHolder:
+                discountPercentage = 0.1m;
+                break;
+            case CustomerStatus.Gold:
+                discountPercentage = 0.25m;
+                break;
+            default:
+                discountPercentage = 0m;
+                break;
+        }
+
+        return _total * discountPercentage;
+    }
+
+    public static string FormatTaxAmount(decimal tax)
+    {
+        return $"Total tax is {FormatValue(tax)}";
+    }
+
+    private static string FormatValue(decimal value)
+    {
+        return value.ToString("C2");
+    }
+ }
 {% endhighlight %}
 
 So firstly we'll find the value for M, which the number of methods in the class. In this case M=5 
@@ -116,32 +121,32 @@ because in addition to standard instance methods we need to include static metho
 and property getters/setters (a property with get and set, if we had any, counts as 2). So we have 
 5: constructor, FormattedTotal getter, GetDiscount, FormatTaxAmount and FormatValue.
 
-    M = 5
+> M = 5
 
 Next, we'll calculate F. F is the number of fields, so F=3: _customerName, _customerStatus, _total.
 
-    F = 3
+> F = 3
 
 Then we need to calculate the MF values. To do this we look at each field in turn and count the 
 number methods that access that field, this gives us an MF value for each field thus:
 
-    _customerName: MF = 2 (constructor, FormattedTotal)
-
-    _customerStatus: MF = 2 (constructor, GetDiscount)
-
-    _total: MF = 3 (constructor, FormattedTotal, GetDiscount)
+> _customerName: MF = 2 (constructor, FormattedTotal)
+>
+> _customerStatus: MF = 2 (constructor, GetDiscount)
+>
+> _total: MF = 3 (constructor, FormattedTotal, GetDiscount)
 
 Now we can plug these values into the LCOM formula
 
-        1 - (sum(MF)/M*F)
-
-        1 - ((2 + 2 + 3) / 5 * 3)
-
-        1 - (7 / 15)
-
-        1 - 0.47
-
-        0.53
+> 1 - (sum(MF)/M*F)
+>
+> 1 - ((2 + 2 + 3) / 5 * 3)
+>
+> 1 - (7 / 15)
+>
+> 1 - 0.47
+> 
+> 0.53
 
 So our DiscountCalculator class has a score of 0.53, or maybe put another way 53% of this
 class is uncohesive (remember we want to get as close to zero as possible). That's not 
