@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cohesion1", "Cohesion1\Cohesion1.csproj", "{CE2E2DDD-FE2D-4A4C-ADAD-285B9C816F4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE2E2DDD-FE2D-4A4C-ADAD-285B9C816F4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE2E2DDD-FE2D-4A4C-ADAD-285B9C816F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE2E2DDD-FE2D-4A4C-ADAD-285B9C816F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE2E2DDD-FE2D-4A4C-ADAD-285B9C816F4F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
