@@ -1,5 +1,8 @@
-# Cohesion #
-## Part 1 - What is Cohesion?
+---
+layout: post
+title: Cohesion - Part 1 What is Cohesion
+author: Richard Nagle
+---
 
 The most [basic description](https://en.wikipedia.org/wiki/Object#Computing) of an object in 
 computer science is 
@@ -47,7 +50,7 @@ at all.
 If, like me, you're not a maths gonk this can seems slightly daunting so I'll walk you through an 
 example and all should become clear.
 
-```c#
+{% highlight c# %}
     public class DiscountCalculator
     {
         private string _customerName;
@@ -106,7 +109,7 @@ example and all should become clear.
             return value.ToString("C2");
         }
     }
-```
+{% endhighlight %}
 
 So firstly we'll find the value for M, which the number of methods in the class. In this case M=5 
 because in addition to standard instance methods we need to include static methods, constructors 
@@ -144,12 +147,3 @@ So our DiscountCalculator class has a score of 0.53, or maybe put another way 53
 class is uncohesive (remember we want to get as close to zero as possible). That's not 
 terrible but I'm sure we can do better. In the next part I'll show how to improve the cohesion
 in this class; and how a focus on cohesion can improve the quality of your code.
-
----
-Richard Nagle, July 2016
-
-## Refactoring towards Cohesion
-
-## Cohesion and Coupling
-
-## Cohesion in Architecture
