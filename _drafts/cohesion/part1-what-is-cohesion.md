@@ -65,68 +65,72 @@ cohesion.
 If, like me, you're not a maths gonk, then this can seem slightly daunting so I'll walk you through an 
 example and all should become clear.
 
+Consider the following class:
+
 {% highlight c# %}
 public class DiscountCalculator
 {
-    private string _customerName;
-    private CustomerStatus _customerStatus;
-    private decimal _total;
+  private string _customerName;
+  private CustomerStatus _customerStatus;
+  private decimal _total;
 
-    public DiscountCalculator(
-        string customerName, 
-        CustomerStatus customerStatus, 
-        decimal total)
-     {
-        _customerName = customerName;
-        _customerStatus = customerStatus;
-        _total = total;
-    }
+  public DiscountCalculator(
+    string customerName,
+    CustomerStatus customerStatus,
+    decimal total)
+  {
+    _customerName = customerName;
+    _customerStatus = customerStatus;
+    _total = total;
+  }
 
-    public string FormattedTotal
+  public string FormattedTotal
+  {
+    get
     {
-        get
-        {
-            var discount = GetDiscount();
-            var discountedTotal = _total - discount;
+      var discount = GetDiscount();
+      var discountedTotal = _total - discount;
 
-            return $"Total for {_customerName} is {FormatValue(discountedTotal)}" +
-                   $"with discount {FormatValue(discount)}";
-        }
+      return
+        $"Total for {_customerName} "+
+        $"is {FormatValue(discountedTotal)}" +
+        $"with discount {FormatValue(discount)}";
     }
+  }
 
-    private decimal GetDiscount()
+  private decimal GetDiscount()
+  {
+    decimal discountPercentage;
+
+    switch(_customerStatus)
     {
-        decimal discountPercentage;
-
-        switch(_customerStatus)
-        {
-            case CustomerStatus.Standard:
-                discountPercentage = 0.05m;
-                break;
-            case CustomerStatus.CardHolder:
-                discountPercentage = 0.1m;
-                break;
-            case CustomerStatus.Gold:
-                discountPercentage = 0.25m;
-                break;
-            default:    
-                discountPercentage = 0m;
-                break;
-        }
-
-        return _total * discountPercentage;
+      case CustomerStatus.Standard:
+        discountPercentage = 0.05m;
+        break;
+      case CustomerStatus.CardHolder:
+        discountPercentage = 0.1m;
+        break;
+      case CustomerStatus.Gold:
+        discountPercentage = 0.25m;
+        break;
+      default:
+        discountPercentage = 0m;
+        break;
     }
 
-    public static string FormatTaxAmount(decimal tax)
-    {
-        return $"Total tax is {FormatValue(tax)}";
-    }
+    return _total * discountPercentage;
+  }
 
-    private static string FormatValue(decimal value)
-    {
-        return value.ToString("C2");
-    }
- }
+  public static string FormatTaxAmount(decimal tax)
+  {
+    return $"Total tax is {FormatValue(tax)}";
+  }
+
+  private static string FormatValue(decimal value)
+  {
+    return value.ToString("C2");
+  }
+}
 {% endhighlight %}
 
 So firstly we'll find the value for M, which is the number of methods in the class. In this case M is 
