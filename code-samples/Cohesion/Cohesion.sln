@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cohesion1", "Cohesion1\Cohesion1.csproj", "{CE2E2DDD-FE2D-4A4C-ADAD-285B9C816F4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cohesion2", "Cohesion2\Cohesion2.csproj", "{430A2967-551E-4157-868C-93F4EF442FE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CE2E2DDD-FE2D-4A4C-ADAD-285B9C816F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE2E2DDD-FE2D-4A4C-ADAD-285B9C816F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE2E2DDD-FE2D-4A4C-ADAD-285B9C816F4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{430A2967-551E-4157-868C-93F4EF442FE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{430A2967-551E-4157-868C-93F4EF442FE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{430A2967-551E-4157-868C-93F4EF442FE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{430A2967-551E-4157-868C-93F4EF442FE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
