@@ -1,34 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cohesion1
+﻿namespace Cohesion1
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-        }
-    }
-
-    // m = 5
-    // f =3
-
-    // 1 -((2+2+3)/5*3)
-    // 1 -(7/15) = 0.533
-
-    //         private string _customerName; //mf = 2
-    // private CustomerStatus _customerStatus; //mf = 2
-    // private decimal _total; //mf = 3
-
-
-    public enum CustomerStatus
-    {
-        Standard, CardHolder, Gold
-    }
-
     public class DiscountCalculator
     {
         private string _customerName;
@@ -87,4 +58,15 @@ namespace Cohesion1
             return value.ToString("C2");
         }
     }
+
+    // m = 5
+    // f =3
+
+    // 1 -((2+2+3)/5*3)
+    // 1 -(7/15) = 0.533
+
+    //         private string _customerName; //mf = 2
+    // private CustomerStatus _customerStatus; //mf = 2
+    // private decimal _total; //mf = 3
+
 }
