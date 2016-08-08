@@ -2,6 +2,7 @@
 layout: post
 title: We're up and running!
 author: EHL Development Team
+date: 2016-07-15
 ---
 Welcome to Energyhelpline Tech!
 

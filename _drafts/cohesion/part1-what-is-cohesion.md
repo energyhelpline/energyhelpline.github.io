@@ -2,6 +2,8 @@
 layout: post
 title: Cohesion - Part 1 What is Cohesion
 author: Richard Nagle
+date: 2016-08-08
+tags: cohesion,oo
 ---
 
 Cohesion is one the most important yet least understood concepts in OOP. This is the first part of 
