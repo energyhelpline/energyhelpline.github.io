@@ -2,7 +2,6 @@
 layout: post
 title: Cohesion - Part 1 What is Cohesion
 author: Richard Nagle
-date: 2016-08-08
 tags: cohesion,oo
 ---
 
