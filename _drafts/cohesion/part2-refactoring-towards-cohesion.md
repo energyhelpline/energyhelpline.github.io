@@ -299,6 +299,20 @@ Now our `Money` class is fully cohesive, scoring 0 for LCOM. Our average cohesio
 enough in many scenarios - but in this case I think we can do better.
 
 ### Extracting fields ###
+The next technique we'll look at to improve cohesion is to extract fields into another class. When we do this we want to move two
+or more fields and replace them with a single field. Look at your class and try to identify related fields that make sense to live
+together - such groups of fields are often referred to as [Data Clumps](http://martinfowler.com/bliki/DataClump.html).
+
+If we examine the fields in `DiscountCalculator` we have `_total`, `_customerStatus` and `customerName`; it's fairly obvious that 
+`_customerStatus` and `_customerName` belong together, probably in some sort of `Customer` class. Let's do that: 
+
+{% highlight c# %}
+
+{% endhighlight %}
+
+{% highlight c# %}
+
+{% endhighlight %}
 
 
 ### Conclusion ### 
