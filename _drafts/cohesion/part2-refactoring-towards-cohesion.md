@@ -274,7 +274,7 @@ public class DiscountCalculator
       var discountedTotal = _total.Subtract(discount);
 
       return $"Total for {_customerName} is {discountedTotal}" +
-              $"with discount {discount}";
+             $"with discount {discount}";
     }
   }
 
@@ -307,16 +307,188 @@ If we examine the fields in `DiscountCalculator` we have `_total`, `_customerSta
 `_customerStatus` and `_customerName` belong together, probably in some sort of `Customer` class. Let's do that: 
 
 {% highlight c# %}
+public class Customer
+{
+  private string _name;
+  private CustomerStatus _status;
 
+  public Customer(string name, CustomerStatus status)
+  {
+    _name = name;
+    _status = status;
+  }
+
+  public string Name
+  {
+    get { return _name; }
+  }
+
+  public CustomerStatus Status
+  {
+    get { return _status; }
+  }
+}
 {% endhighlight %}
+
+And integrate it into `DiscountCalculator`
 
 {% highlight c# %}
+public class DiscountCalculator
+{
+  private Customer _customer;
+  private Money _total;
 
+  public DiscountCalculator (Money total, Customer customer)
+  {
+    _customer = customer;
+    _total = total;
+  }
+
+  public string FormattedTotal
+  {
+    get
+    {
+      var discount = GetDiscount();
+      var discountedTotal = _total.Subtract(discount);
+
+      return $"Total for {_customer.Name} is {discountedTotal}" +
+             $"with discount {discount}";
+    }
+  }
+
+  private Money GetDiscount()
+  {
+    switch (_customer.Status)
+    {
+      case CustomerStatus.Standard:
+        return _total.Percentage(0.05m);
+      case CustomerStatus.CardHolder:
+        return _total.Percentage(0.1m);
+      case CustomerStatus.Gold:
+        return _total.Percentage(0.25m);
+      default:
+        return _total.Percentage(0m);
+    }
+  }
+}
 {% endhighlight %}
 
+And yay, we've finally managed to get an LCOM score of zero for `DiscountCalculator` - we have two fields and they are both
+used in every method. The LCOM for `Customer` is 0.34 and, disappointingly, the average LCOM remains at 0.11. To fix this we 
+are going to move some of the behaviour to the `Customer` class. But to start with we'll look at `CustomerStatus` which is
+currently defined as an `enum`:
+
+{% highlight c# %}
+public enum CustomerStatus
+{
+  Standard, CardHolder, Gold
+}
+{% endhighlight %}
+
+The first move is convert this into a real class:
+
+{% highlight c# %}
+public class CustomerStatus
+{
+  public static CustomerStatus Standard { get; }
+  public static CustomerStatus CardHolder { get; }
+  public static CustomerStatus Gold { get; }
+
+  static CustomerStatus()
+  {
+    Standard = new CustomerStatus(0.05m);
+    CardHolder = new CustomerStatus(0.1m);
+    Gold = new CustomerStatus(0.25m);
+  }
+
+  private readonly decimal _discount;
+
+  private CustomerStatus(decimal discount)
+  {
+    _discount = discount;
+  }
+
+  public Money GetDiscount(Money total)
+  {
+      return total.Percentage(_discount);
+  }
+}
+{% endhighlight %}
+
+And update the `GetDiscount` in `DiscountCalculator` thus:
+
+{% highlight c# %}
+private Money GetDiscount()
+{
+  return _customer.Status.GetDiscount(_total);
+}
+{% endhighlight %}
+
+I don't like the [Demeter](https://en.wikipedia.org/wiki/Law_of_Demeter) violation in that method so I add a passthru method
+to `Customer`:
+
+{% highlight c# %}
+public Money GetDiscount(Money total)
+{
+  return _status.GetDiscount(total);
+}
+{% endhighlight %}
+
+And change `GetDiscount` in `DiscountCalculator` to use it:
+
+{% highlight c# %}
+private Money GetDiscount()
+{
+  return _customer.GetDiscount(_total);
+}
+{% endhighlight %}
+
+These changes so far have not improved our LCOM score, they were just neccessary to get the code is a better state. But now when I
+look at the `FormattedTotal` property in `DiscountCalculator`: 
+
+{% highlight c# %}    
+public string FormattedTotal
+{
+  get
+  {
+    var discount = GetDiscount();
+    var discountedTotal = _total.Subtract(discount);
+
+    return $"Total for {_customer.Name} is {discountedTotal}" +
+           $"with discount {discount}";
+  }
+}
+{% endhighlight %}
+
+I can see that this behavior really belongs on the `Customer` class; so I move it there: 
+
+{% highlight c# %}
+public class Customer
+{
+  private string _name;
+  private CustomerStatus _status;
+
+  public Customer(string name, CustomerStatus status)
+  {
+    _name = name;
+    _status = status;
+  }
+
+  public string FormattedTotal(Money total)
+  {
+    var discount = _status.GetDiscount(total);
+    var discountedTotal = total.Subtract(discount);
+
+    return $"Total for {_name} is {discountedTotal}" +
+           $"with discount {discount}";
+  }
+}    
+{% endhighlight %}
+
+This now gives our `Customer` class an LCOM score of zero, so we are done.
 
 ### Conclusion ### 
 * talk about SRP
 * something about coupling?
 * is using LCOM important?  
-* talk about data-clumps (decimals in MoneyFormatter) 
+  

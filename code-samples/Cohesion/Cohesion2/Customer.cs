@@ -11,22 +11,21 @@
       _status = status;
     }
 
-    public string Name
+    public string FormattedTotal(Money total)
     {
-      get { return _name; }
-    }
+      var discount = _status.GetDiscount(total);
+      var discountedTotal = total.Subtract(discount);
 
-    public CustomerStatus Status
-    {
-      get { return _status; }
+      return $"Total for {_name} is {discountedTotal}" +
+              $"with discount {discount}";
     }
   }
 
 
-  // m = 3
+  // m = 2
   // f = 2
 
-  // 1 -((2+1+1)/3*2)
-  // 1 -(4/6) = 0.33
+  // 1 -((2+2)/2*2)
+  // 1 -(4/4) = 0
 
 }
