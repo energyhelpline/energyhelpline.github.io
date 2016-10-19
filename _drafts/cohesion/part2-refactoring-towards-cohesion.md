@@ -2,18 +2,18 @@
 layout: post
 title: Cohesion - Part 2 Refactoring Towards Cohesion
 author: Richard Nagle
-date: 2016-08-08
+date: 2016-10-19
 tags: cohesion,oo,refactoring
 ---
 
 In the second part of this series about code cohesion we'll look at how we can refactor an existing class
 to be more cohesive and look at the benefits of doing so.
 
-[Previously](/part1-what-is-cohesion) we were examining a class `DiscountCalculator` and determined that it 
-had Lack of Cohesion of Methods (LCOM) score of 0.53. We want this score to be as close to zero as possible
-so we need to refactor this class to improve it's cohesiveness. As cohesion is basically a function of keeping 
-methods and the field they operate on together, when refactoring we have two main strategies - extracting methods,
-and extracting fields.
+[Previously](/cohesion-part-1) we were examining a class, `DiscountCalculator`, and we determined it to have
+a Lack of Cohesion of Methods (LCOM) score of 0.53. We want this score to be as close to zero as possible
+so need to refactor this class to improve its cohesiveness. High cohesion is achieved by keeping methods and
+the fields they operate upon together in the same class; therefore to improve cohesiveness we have two main
+refactoring strategies - extracting methods and extracting fields.
 
 ### Extracting Methods ### 
 
@@ -97,12 +97,12 @@ are least cohesive.
 | FormatTaxAmount() | 0               | 
 | FormatValue()     | 0               |
 
-It's fairly obvious that the `FormatTaxAmount()` and `FormatValue()` methods are our first target as they use no 
+It's fairly obvious that the `FormatTaxAmount()` and `FormatValue()` methods are the least cohesive as they use no
 fields at all. In fact, there's a pretty big warning sign right there in the code; both these methods are marked
 as `static` meaning they belong to the class and not to instances of the class, therefore they are unlikely to 
-access instance fields. Also, look at `FormatTaxAmount()`, this method really has nothing to do with calculating 
-discounts and is not called by any of the other methods; it's probably only really here so that it can use the 
-formatting provided by the `FormatValue()` method. 
+access instance fields. Additionally, look at `FormatTaxAmount()`, this method really has nothing to do with calculating
+discounts and is not called by any of the other methods; it's probably only here so that it can use the formatting
+provided by the `FormatValue()` method.
 
 So, what to do?
 
@@ -201,12 +201,13 @@ we just created, it's entirely static so I'd guess not very cohesive. Let's do a
 >
 > 1
  
-So as expected the `MoneyFormatter` class is completely uncohesive with the worst possible LCOM score of 1.
+Yep, the `MoneyFormatter` class is completely uncohesive with the worst possible LCOM score of 1.
 Even worse if we calculate the average cohesion of these two classes together we get a score of 0.61 which
 is even worse than our original score of 0.53.
 
 Let us see if we can improve `MoneyFormatter`. If we look at the two methods they both operate on a single
-decimal so maybe we change this to an instance field and improve the cohesion.
+decimal so maybe we change this to an instance field and improve the cohesion. I am also going to change the
+name of the class to `Money` to describe its new responsibility.
 
 {% highlight c# %}
 
@@ -247,7 +248,7 @@ calculating the discount. Therefore I need to add two new methods to `Money`:
   }
 {% endhighlight %}
 
-`DiscountCalculator` now looks like this:
+The `DiscountCalculator` now looks like this:
 
 {% highlight c# %}
 public class DiscountCalculator
@@ -299,11 +300,11 @@ Now our `Money` class is fully cohesive, scoring 0 for LCOM. Our average cohesio
 enough in many scenarios - but in this case I think we can do better.
 
 ### Extracting fields ###
-The next technique we'll look at to improve cohesion is to extract fields into another class. When we do this we want to move two
-or more fields and replace them with a single field. Look at your class and try to identify related fields that make sense to live
-together - such groups of fields are often referred to as [Data Clumps](http://martinfowler.com/bliki/DataClump.html).
+The second technique we'll look at to improve cohesion is to extract fields into another class. When we do this we want to move two
+or more fields and replace them with a single field. Look at your class and try to identify related fields that should be grouped together -
+such groups of fields are often referred to as [Data Clumps](http://martinfowler.com/bliki/DataClump.html).
 
-If we examine the fields in `DiscountCalculator` we have `_total`, `_customerStatus` and `customerName`; it's fairly obvious that 
+If we examine the fields in `DiscountCalculator` we have `_total`, `_customerStatus` and `customerName`. It seems fairly obvious that
 `_customerStatus` and `_customerName` belong together, probably in some sort of `Customer` class. Let's do that: 
 
 {% highlight c# %}
@@ -375,8 +376,8 @@ public class DiscountCalculator
 
 And yay, we've finally managed to get an LCOM score of zero for `DiscountCalculator` - we have two fields and they are both
 used in every method. The LCOM for `Customer` is 0.34 and, disappointingly, the average LCOM remains at 0.11. To fix this we 
-are going to move some of the behaviour to the `Customer` class. But to start with we'll look at `CustomerStatus` which is
-currently defined as an `enum`:
+are going to have to move some of the behaviour into the `Customer` class. But to start with we'll look at `CustomerStatus`
+which is currently defined as an `enum`:
 
 {% highlight c# %}
 public enum CustomerStatus
@@ -385,7 +386,7 @@ public enum CustomerStatus
 }
 {% endhighlight %}
 
-The first move is convert this into a real class:
+The first move is convert this into a real class and move the responsibility for calculating the discount into it:
 
 {% highlight c# %}
 public class CustomerStatus
@@ -415,7 +416,7 @@ public class CustomerStatus
 }
 {% endhighlight %}
 
-And update the `GetDiscount` in `DiscountCalculator` thus:
+And update the `GetDiscount()` method in `DiscountCalculator`:
 
 {% highlight c# %}
 private Money GetDiscount()
@@ -425,7 +426,7 @@ private Money GetDiscount()
 {% endhighlight %}
 
 I don't like the [Demeter](https://en.wikipedia.org/wiki/Law_of_Demeter) violation in that method so I add a passthru method
-to `Customer`:
+on `Customer`:
 
 {% highlight c# %}
 public Money GetDiscount(Money total)
@@ -434,7 +435,7 @@ public Money GetDiscount(Money total)
 }
 {% endhighlight %}
 
-And change `GetDiscount` in `DiscountCalculator` to use it:
+And change `GetDiscount()` in `DiscountCalculator` to use it:
 
 {% highlight c# %}
 private Money GetDiscount()
@@ -443,8 +444,8 @@ private Money GetDiscount()
 }
 {% endhighlight %}
 
-These changes so far have not improved our LCOM score, they were just neccessary to get the code is a better state. But now when I
-look at the `FormattedTotal` property in `DiscountCalculator`: 
+These changes so far have not improved our LCOM score, they were just necessary to get the code is a better state for my final refactoring.
+Looking at the `FormattedTotal` property in `DiscountCalculator`  I can see that this behaviour actually belongs to the `Customer` class
 
 {% highlight c# %}    
 public string FormattedTotal
@@ -460,7 +461,7 @@ public string FormattedTotal
 }
 {% endhighlight %}
 
-I can see that this behavior really belongs on the `Customer` class; so I move it there: 
+So I move it to the `Customer` class:
 
 {% highlight c# %}
 public class Customer
@@ -511,18 +512,16 @@ public class DiscountCalculator
 {% endhighlight %}
 
 We've pretty much ended up with a class that does nothing and I'd probably look to remove it and get clients to interact
-directly with the `Customer` class.
+directly with the `Customer` class instead.
 
 So, what have we achieved? By concentrating on improving the cohesion in our original `DiscountCalculator` class we have 
 spawned additional classes for `Money`, `Customer` and `CustomerStatus` to replace the original confused class. In doing so 
-we have improved design by putting the responsibilities into classes where they really belongs. In other words, we have fulfilled
-the Single Responsibility Principle. 
+we have the improved the design by putting the correct responsibilities into highly-focused classes. In other words, we have
+fulfilled the Single Responsibility Principle.
 
 One of the most common criticism of the Single Responsibility Principle is that it is not clear how big the single responsibility
-should be. As an extreme example, I could write my entire application in a single class and it would still only have a single responsibility, 
-that being "running my application". But by concentrating on the cohesion metrics we can correctly size classes to manage just their data and
-apply the Single Responsibility Principle as it was meant.
+should be. As an extreme example, I could write my entire application in a single class and it would still only have a single
+responsibility, that being "running my application". But by concentrating on the cohesion metrics we can correctly size classes
+to manage just their data and apply the Single Responsibility Principle as it was meant to be.
 
-In the final part of this series I will look how we should apply cohesion at the architectural level. 
-
-  
+In the final part of this series I will look how we should apply cohesion at the architectural level.
