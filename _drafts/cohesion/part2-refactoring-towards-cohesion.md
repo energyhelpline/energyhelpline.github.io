@@ -524,4 +524,8 @@ should be. As an extreme example, I could write my entire application in a singl
 responsibility, that being "running my application". But by concentrating on the cohesion metrics we can correctly size classes
 to manage just their data and apply the Single Responsibility Principle as it was meant to be.
 
+Another design improvement we've made is to remove the reliance on simple-types; we achieved this by replacing them with classes. So if
+you look at the original `DiscountCalculator` it used `decimal` for the values, `string` for the customer and an `enum` for the customer
+status. In the completed version these have been replaced with `Money`, `Customer` and `CustomerStatus` classes.
+
 In the final part of this series I will look how we should apply cohesion at the architectural level.
