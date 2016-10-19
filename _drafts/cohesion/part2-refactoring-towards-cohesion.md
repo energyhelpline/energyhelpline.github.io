@@ -488,7 +488,41 @@ public class Customer
 This now gives our `Customer` class an LCOM score of zero, so we are done.
 
 ### Conclusion ### 
-* talk about SRP
-* something about coupling?
-* is using LCOM important?  
+
+Let's take a final look at our `DiscountCalculator` class:
+
+{% highlight c# %}
+public class DiscountCalculator
+{
+  private Customer _customer;
+  private Money _total;
+
+  public DiscountCalculator(Money total, Customer customer)
+  {
+    _customer = customer;
+    _total = total;
+  }
+
+  public string FormattedTotal
+  {
+    get { return _customer.FormattedTotal(_total); }
+  }
+}
+{% endhighlight %}
+
+We've pretty much ended up with a class that does nothing and I'd probably look to remove it and get clients to interact
+directly with the `Customer` class.
+
+So, what have we achieved? By concentrating on improving the cohesion in our original `DiscountCalculator` class we have 
+spawned additional classes for `Money`, `Customer` and `CustomerStatus` to replace the original confused class. In doing so 
+we have improved design by putting the responsibilities into classes where they really belongs. In other words, we have fulfilled
+the Single Responsibility Principle. 
+
+One of the most common criticism of the Single Responsibility Principle is that it is not clear how big the single responsibility
+should be. As an extreme example, I could write my entire application in a single class and it would still only have a single responsibility, 
+that being "running my application". But by concentrating on the cohesion metrics we can correctly size classes to manage just their data and
+apply the Single Responsibility Principle as it was meant.
+
+In the final part of this series I will look how we should apply cohesion at the architectural level. 
+
   
