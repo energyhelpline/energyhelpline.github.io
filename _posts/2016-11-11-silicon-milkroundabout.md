@@ -5,7 +5,7 @@ author: Grant McKenna
 tags: Silicon Milkroundabout,SMR2016
 ---
 
-We are going to Silicon Milkroundabout 2016! On Sunday, so came and say hello.
+We are going to Silicon Milkroundabout 2016! On Sunday, so come and say hello.
 
 We'll be wearing branded t-shirts, so we should be fairly easy to find. We'll also have a few to give away.
 
