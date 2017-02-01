@@ -1,5 +1,8 @@
-Duplication and Abstractions
-===
+---
+layout: post
+title: Duplication and Abstraction
+author: Douglas Waugh
+---
 
 A lot of developers know that they shouldn't duplicate code.  It makes logical sense; you don't want to have to maintain the same logic in multiple places because if it needs to change you have to hunt through the code base trying to find it, you'll likely have to write the same test multiple times, and you may find the duplicated logic starts to deviate over time leading to different behaviours which may be bugs.
 
