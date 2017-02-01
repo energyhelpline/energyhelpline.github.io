@@ -10,9 +10,9 @@ However I believe that developers (I suppose I'm really talking about past me he
 
 *TODO: I need to read to rest of Don't Repeat Yourself and Orthogonality sections of The Pragmatic Programmer again to make sure I'm right about this, but...*
 
-In fact, Andy Hunt and Dave Thomas who introduced the concept in [The Pragmatic Programmer][], which is an excellent book and I encourage those who haven't read it to do so, spend a long time explaining different types of duplication and the ways they can arise, but they don't offer any advice on how you should get rid of the duplication.
+In fact, Andy Hunt and Dave Thomas who introduced the concept in [The Pragmatic Programmer](https://pragprog.com/book/tpp/the-pragmatic-programmer), which is an excellent book and I encourage those who haven't read it to do so, spend a long time explaining different types of duplication and the ways they can arise, but they don't offer any advice on how you should get rid of the duplication.
 
-What I want to draw attention to is the link between abstractions and duplication that Steve Smith talks about.  Steve Smith, in his entry to the book [97 Things Every Programmer Should Know][], says:
+What I want to draw attention to is the link between abstractions and duplication that Steve Smith talks about.  Steve Smith, in his entry to the book [97 Things Every Programmer Should Know]( http://programmer.97things.oreilly.com/wiki/index.php/Contributions_Appearing_in_the_Book), says:
 
 > The developer who learns to recognize duplication, and understands how to eliminate it through appropriate practice and proper abstraction, can produce much cleaner code than one who continuously infects the application with unnecessary repetition.
 
@@ -23,7 +23,7 @@ The hardest thing about this advice is there is no process you can follow to cre
 Removing duplication the right way
 ---
 
-Joe B Rainsberger, otherwise known as JBrains, has an interesting video about finding abstractions in the episdoe [A Long Look Down the Road (paywall)][], part of his [The World's Best Intro to TDD][].  In the video he thinks out loud so you can really understand the thought process he goes through which I have made an effort to document below.
+Joe B Rainsberger, otherwise known as JBrains, has an interesting video about finding abstractions in the episdoe [A Long Look Down the Road (paywall)](http://online-training.jbrains.ca/courses/wbitdd-01/lectures/140743), part of his [The World's Best Intro to TDD](http://www.jbrains.ca/training/the-worlds-best-introduction-to-test-driven-development/).  In the video he thinks out loud so you can really understand the thought process he goes through which I have made an effort to document below.
 
 The class that is the focus of the video, `ConsoleDisplay`, is so small that you might think that there is nothing to refactor in it, or that it doesn't need refactoring, or at least is not warrented given his progress with the project in the series.  You may be right about the latter, as Joe himself conceeds, but it is an interesting exercise none-the-less.
 
@@ -317,7 +317,3 @@ To do
 
 * It looks as though Code Complete might have something to say on the matter.  I've never read it, and we've got a copy!
 * Perhaps I need to research what an abstraction is.
-
-[A Long Look Down the Road (paywall)]: http://online-training.jbrains.ca/courses/wbitdd-01/lectures/140743
-[The World's Best Intro to TDD]: http://www.jbrains.ca/training/the-worlds-best-introduction-to-test-driven-development/
-[97 Things Every Programmer Should Know]: http://programmer.97things.oreilly.com/wiki/index.php/Contributions_Appearing_in_the_Book
