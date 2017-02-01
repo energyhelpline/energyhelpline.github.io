@@ -12,7 +12,7 @@ However I believe that developers (I suppose I'm really talking about past me he
 
 In fact, Andy Hunt and Dave Thomas who introduced the concept in [The Pragmatic Programmer](https://pragprog.com/book/tpp/the-pragmatic-programmer), which is an excellent book and I encourage those who haven't read it to do so, spend a long time explaining different types of duplication and the ways they can arise, but they don't offer any advice on how you should get rid of the duplication.
 
-What I want to draw attention to is the link between abstractions and duplication that Steve Smith talks about.  Steve Smith, in his entry to the book [97 Things Every Programmer Should Know]( http://programmer.97things.oreilly.com/wiki/index.php/Contributions_Appearing_in_the_Book), says:
+What I want to draw attention to is the link between abstractions and duplication that Steve Smith talks about.  Steve Smith, [in his entry](http://programmer.97things.oreilly.com/wiki/index.php/Don%27t_Repeat_Yourself) to the book [97 Things Every Programmer Should Know]( http://programmer.97things.oreilly.com/wiki/index.php/Contributions_Appearing_in_the_Book), says:
 
 > The developer who learns to recognize duplication, and understands how to eliminate it through appropriate practice and proper abstraction, can produce much cleaner code than one who continuously infects the application with unnecessary repetition.
 
