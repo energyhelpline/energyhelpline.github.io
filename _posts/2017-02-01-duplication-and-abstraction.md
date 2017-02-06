@@ -8,8 +8,6 @@ A lot of developers know that they shouldn't duplicate code.  It makes logical s
 
 However I believe that developers (I suppose I'm really talking about past me here!) can focus on removing duplication by any means necessary, which, whilst solving the problem of the code being in more than one place, doesn't always produce a pleasing design full on reusable abstractions.
 
-*TODO: I need to read to rest of Don't Repeat Yourself and Orthogonality sections of The Pragmatic Programmer again to make sure I'm right about this, but...*
-
 In fact, Andy Hunt and Dave Thomas who introduced the concept in [The Pragmatic Programmer](https://pragprog.com/book/tpp/the-pragmatic-programmer), which is an excellent book and I encourage those who haven't read it to do so, spend a long time explaining different types of duplication and the ways they can arise, but they don't offer any advice on how you should get rid of the duplication.
 
 What I want to draw attention to is the link between abstractions and duplication that Steve Smith talks about.  Steve Smith, [in his entry](http://programmer.97things.oreilly.com/wiki/index.php/Don%27t_Repeat_Yourself) to the book [97 Things Every Programmer Should Know]( http://programmer.97things.oreilly.com/wiki/index.php/Contributions_Appearing_in_the_Book), says:
@@ -299,7 +297,7 @@ public class ConsoleRendererStringFormatter : RendererFormatter {
 }
 ```
 
-This refactoring removes the same amount of duplication as the first.  You might even think this to be better, as there are fewer classes created.  Unfortunately it hasn't really solved any of our other problems.  The rendering and the formatting cannot be tested independently and it is harder to swap either one out because one is tied to the other.  In other words, we have coupled rendering together with formatting.  The name of the new interface `RendererFormatter` and the new class that implements the interface `ConsoleRendererStringFormatter` are both compound names which describe doing more than one thing, signalling perhaps that this abstraction is in violation of [The Single Responsibility Principle][].
+This refactoring removes the same amount of duplication as the first.  You might even think this to be better, as there are fewer classes created.  Unfortunately it hasn't really solved any of our other problems.  The rendering and the formatting cannot be tested independently and it is harder to swap either one out because one is tied to the other.  In other words, we have coupled rendering together with formatting.  The name of the new interface `RendererFormatter` and the new class that implements the interface `ConsoleRendererStringFormatter` are both compound names which describe doing more than one thing, signalling perhaps that this abstraction is in violation of [the Single Responsibility Principle](https://8thlight.com/blog/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html).
 
 Conclusion
 ---
@@ -308,12 +306,6 @@ This may not be the greatest example.  Perhaps the second refactoring is better 
 
 However, I still think the examples give a good insight in to the sensitivity to conceptually different things within the code that is needed by a developer to enable abstractions to emerge.
 
-This kind of sensitivity to the concepts in the code, and the level of abstraction they are is also critical when extracting methods in the same way as it is when extracting classes.  Methods are also an abstraction.  Even if the extracted methods don't get moved to classes of their own, it is still important that the methods themselves are coherant.
+This kind of sensitivity to concepts in the code, and their level of abstraction, is also critical when extracting methods in the same way as it is when extracting classes.  Methods are also an abstraction.  Even if the extracted methods don't get moved to classes of their own, it is still important that the methods themselves are coherant.
 
 In the real world I have noticed the kind of coupling introduced in the name of eliviating duplication in my own code when I've been moving shared behaviour up to a base class.  More than once I've noticed I've moved code shared between two controllers to a base controller class but the code I moved shared very little in common conceptually and yet I've coupled them together inside my new abstraction, the base controller class.  A better way of removing the duplication might have been to create seperate classes injected in to the controllers as dependencies.
-
-To do
----
-
-* It looks as though Code Complete might have something to say on the matter.  I've never read it, and we've got a copy!
-* Perhaps I need to research what an abstraction is.
