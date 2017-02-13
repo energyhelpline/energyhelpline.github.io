@@ -6,7 +6,7 @@ author: Douglas Waugh
 
 ![Jigsaw piece cookie cutter and cookies](https://c1.staticflickr.com/8/7306/8721968813_4c65eb6473_z.jpg "Jigsaw piece cookie cutter and cookies")
 
-Photo credit: [wanelo - Jigsaw Cookie Cutter outdoor wicker is a favorite of ours! So is this find by hillsou.](https://www.flickr.com/photos/wicker-furniture/8721968813/) by  [Wicker Paradise](https://www.flickr.com/photos/wicker-furniture/) is licensed under [CC by 2.0](https://creativecommons.org/licenses/by/2.0/)
+Photo credit: (1)
 
 A lot of developers know that they shouldn't duplicate code.  It makes logical sense; you don't want to have to maintain the same logic in multiple places because if it needs to change you have to hunt through the code base trying to find it, you'll likely have to write the same test multiple times, and you may find the duplicated logic starts to deviate over time leading to different behaviours which may be bugs.
 
@@ -313,3 +313,8 @@ However, I still think the examples give a good insight in to the sensitivity to
 This kind of sensitivity to concepts in the code, and their level of abstraction, is also critical when extracting methods in the same way as it is when extracting classes.  Methods are also an abstraction.  Even if the extracted methods don't get moved to classes of their own, it is still important that the methods themselves are coherent.
 
 In the real world I have noticed the kind of coupling introduced in the name of alleviating duplication in my own code when I've been moving shared behaviour up to a base class.  More than once I've noticed I've moved code shared between two controllers to a base controller class but the code I moved shared very little in common conceptually and yet I've coupled them together inside my new abstraction, the base controller class.  A better way of removing the duplication might have been to create separate classes injected in to the controllers as dependencies.
+
+Photo credits
+---
+
+(1) [wanelo - Jigsaw Cookie Cutter outdoor wicker is a favorite of ours! So is this find by hillsou.](https://www.flickr.com/photos/wicker-furniture/8721968813/) by  [Wicker Paradise](https://www.flickr.com/photos/wicker-furniture/) is licensed under [CC by 2.0](https://creativecommons.org/licenses/by/2.0/)
