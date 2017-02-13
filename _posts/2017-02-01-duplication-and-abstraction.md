@@ -4,6 +4,10 @@ title: Duplication and Abstraction
 author: Douglas Waugh
 ---
 
+![Jigsaw piece cookie cutter and cookies](https://c1.staticflickr.com/8/7306/8721968813_4c65eb6473_z.jpg "Jigsaw piece cookie cutter and cookies")
+
+Photo credit: [wanelo - Jigsaw Cookie Cutter outdoor wicker is a favorite of ours! So is this find by hillsou.](https://www.flickr.com/photos/wicker-furniture/8721968813/) by  [Wicker Paradise](https://www.flickr.com/photos/wicker-furniture/) is licensed under [CC by 2.0](https://creativecommons.org/licenses/by/2.0/)
+
 A lot of developers know that they shouldn't duplicate code.  It makes logical sense; you don't want to have to maintain the same logic in multiple places because if it needs to change you have to hunt through the code base trying to find it, you'll likely have to write the same test multiple times, and you may find the duplicated logic starts to deviate over time leading to different behaviours which may be bugs.
 
 However I believe that developers (I suppose I'm really talking about past me here!) can focus on removing duplication by any means necessary, which, whilst solving the problem of the code being in more than one place, doesn't always produce a pleasing design full on reusable abstractions.
