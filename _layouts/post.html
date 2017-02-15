@@ -6,11 +6,7 @@ layout: default
   <h1>{{ page.title }}</h1>
 
   <div class="entry">
-    {% if post.content contains site.excerpt_separator %}
-      {{ post.content | remove: post.excerpt }}
-    {% else %}
-      {{ post.content }}
-    {% endif %}
+    {{ content }}
   </div>
 
   <div class="date">

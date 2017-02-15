@@ -4,12 +4,6 @@ title: Duplication and Abstraction
 author: Douglas Waugh
 ---
 
-![Jigsaw piece cookie cutter and cookies](https://farm8.staticflickr.com/7306/8721968813_4c65eb6473_m_d.jpg "Jigsaw piece cookie cutter and cookies")
-
-A lot of developers know that they shouldn't duplicate code.  However I believe that developers (I suppose I'm really talking about past me here!) can focus on removing duplication by any means necessary, which doesn't always produce a pleasing design full on reusable abstractions.
-
-<!--more-->
-
 ![Jigsaw piece cookie cutter and cookies](https://c1.staticflickr.com/8/7306/8721968813_4c65eb6473_z.jpg "Jigsaw piece cookie cutter and cookies")
 
 Photo credit: (1)
