@@ -9,6 +9,12 @@ Cohesion is one the most important yet least understood concepts in OOP. This is
 a short series aiming to explain the concept of Cohesion and the benefits you can gain from understanding
 and correctly applying it. 
 
+<!--more-->
+
+Cohesion is one the most important yet least understood concepts in OOP. This is the first part of 
+a short series aiming to explain the concept of Cohesion and the benefits you can gain from understanding
+and correctly applying it. 
+
 ### What is Cohesion 
 
 The most [basic description](https://en.wikipedia.org/wiki/Object#Computing) of an object in 

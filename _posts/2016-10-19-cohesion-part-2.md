@@ -9,6 +9,11 @@ tags: cohesion,oo,refactoring
 In the second part of this series about code cohesion we'll look at how we can refactor an existing class
 to be more cohesive and look at the benefits of doing so.
 
+<!--more-->
+
+In the second part of this series about code cohesion we'll look at how we can refactor an existing class
+to be more cohesive and look at the benefits of doing so.
+
 [Previously](/cohesion-part-1) we were examining a class, `DiscountCalculator`, and we determined it to have
 a Lack of Cohesion of Methods (LCOM) score of 0.53. We want this score to be as close to zero as possible
 so need to refactor this class to improve its cohesiveness. High cohesion is achieved by keeping methods and
