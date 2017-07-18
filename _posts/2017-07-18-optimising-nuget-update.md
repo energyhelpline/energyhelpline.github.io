@@ -14,14 +14,17 @@ This week I set about trying to optimise the build time for our NuGet package up
 In pseudo-code the NuGet package update process is something like this:
 
 ```
-installedPackages = Get-list-of-installed-packages-by-parsing-packages.config-files
-availablePackages = Get-list-of-packages-available-on-our-nuget-server
+installedPackages = Get-list-of-installed-packages-by-parsing-
+                       packages.config-files
+availablePackages = Get-list-of-packages-available-on-our-
+                       nuget-server
 
-targetPackages = Intersection-of-installedPackages-and-availablePackages
+targetPackages = Intersection-of-installedPackages-
+                    and-availablePackages
 
 foreach targetPackage in targetPackages
 {
-    nuget update my.sln -Id targetPackage -Source url-to-nuget-server
+    nuget update my.sln -Id targetPackage -Source nuget-url
 }
 ```
 After several false starts, I found the main culprit to be `nuget update` which appears to be agonisingly slow. Given this tardiness, it doesn't make sense to
@@ -30,15 +33,15 @@ make several calls to `nuget update` within a loop; once for each package that w
 It turns out there is. The `-Id` argument to `nuget update` is used to specify which package we want to update. Instead of specifying `-Id` once per package in a loop I discovered that it can be specified multiple times; in other words instead of
 
 ```
-nuget update my.sln -Id package1
-nuget update my.sln -Id package2
-nuget update my.sln -Id package3
+nuget update my.sln -Id pkg1
+nuget update my.sln -Id pkg2
+nuget update my.sln -Id pkg3
 ```
 
 We can do
 
 ```
-nuget update my.sln -Id package1 -Id package2 -Id package3
+nuget update my.sln -Id pkg1 -Id pkg2 -Id pkg3
 ```
 
 This speeds thing up significantly - that 14 minute build-time shrunk down to just 90 seconds. Then by updating the `nuget.exe` commmand-line from 3.5 to 4.1 we managed to get this down to 40 seconds - an improvement of 2100%.
