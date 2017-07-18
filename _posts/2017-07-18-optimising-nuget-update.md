@@ -16,6 +16,7 @@ In pseudo-code the NuGet package update process is something like this:
 ```
 installedPackages = Get-list-of-installed-packages-by-parsing-
                        packages.config-files
+
 availablePackages = Get-list-of-packages-available-on-our-
                        nuget-server
 
