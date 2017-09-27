@@ -19,3 +19,18 @@ In order to get the site running locally
     HOST_PORT is the port vagrant assigned for the host to forward to the VM  In the previous screenshot you can see the host port is 8703.
 
     HOST_PORT is randomly generated and will be different each time you `vagrant up`.
+
+
+# Running on Windows 10
+
+1. Ensure you have choco install
+
+```powershell
+# Administrative Powershell
+Set-ExecutionPolicy AllSigned; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
+
+2. Run `choco install ruby --version 2.4.2.2`
+3. Run `gem install jekyll -v 3.6.0`
+4. Run `gem install bundler -v 1.15.4`
+5. Run `bundle exec jekyll serve`
