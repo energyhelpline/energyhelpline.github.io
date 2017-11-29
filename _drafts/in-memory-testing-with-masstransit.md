@@ -1,3 +1,10 @@
+---
+layout: post
+title: Using the In-Memory Transport to Test your MassTransit Configuration
+author: Ronan Moriarty
+excerpt: Shows how to use MassTransit's In-Memory transport to test your consumer registration
+---
+
 ## Background
 
 Recently, we started using [MassTransit](http://masstransit-project.com/) with RabbitMQ to provide reliable communication between different services. As part of our testing hierarchy, we wrote a small number of acceptance tests communicating over RabbitMQ, to verify that our MassTransit configuration was correct. At the other end of our testing hierarchy, it seemed more appropriate that tests at the service boundaries should make use of the MassTransit In-Memory transport.
