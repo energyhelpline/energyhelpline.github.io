@@ -18,6 +18,7 @@ If you have a MassTransit consumer called, say, CustomCommandConsumer, you *coul
 The in-memory transport makes for faster-running tests, and it simplifies build / deployment pipelines as tests using the in-memory transport don't require the presence of any message broker for the tests to run. You'll see from the demo that your consumer registration code can be written independently of transport, applying equally to RabbitMQ and the In-Memory transport.
 
 ## My Demo Project
+
 It took me a little while to get tests running with the in-memory transport, and I couldn't find many examples demonstrating this, so I thought I'd create [this demo project](https://github.com/ronanmoriarty/blog-masstransit-inmemory-testing) to illustrate the process.
 
 I've split the code into two test fixtures - one to demonstrate sending commands to a particular endpoint, and the other to demonstrate publishing events.
@@ -41,12 +42,13 @@ private void WaitUntilConditionMetOrTimedOut(Func<bool> conditionMet)
 
 I've chosen to just capture the received events in my event consumer, so in my test after I publish the event, I wait at most 5 seconds to see if an event has been received:
 ```c#
-            WaitUntilConditionMetOrTimedOut(() => State.EventsReceived.Any());
+    WaitUntilConditionMetOrTimedOut(() => State.EventsReceived.Any());
 ```
 
 After giving the consumer a chance to process the event, we're ready to make our assertions.
 
 ## The System Under Test
+
 I've defined the following class to configure what consumers listen on which queues:
 ```c#
 public class BusFactoryConfiguration
@@ -96,6 +98,7 @@ public class BusFactoryConfiguration
 Notice how the above code configures endpoints using the IBusFactoryConfigurator, which is independent of the in-memory transport and RabbitMQ.
 
 ## The Consumer Factory
+
 The above code makes use of the IConsumerFactory interface, which I define as follows:
 ```c#
 public interface IConsumerFactory
@@ -176,3 +179,9 @@ private async Task PublishMyEvent()
     await _busControl.Publish(new MyEvent());
 }
 ```
+
+## Summary
+
+Depending on your testing strategy and what acceptance tests you've written, you may need some additional tests specifically around your MassTransit configuration. This blog and the associated GitHub repository demonstrate one way to do this, using the In-Memory transport.
+
+I've used a state-based approach for assertions in this blog, but the IConsumerFactory could instead be implemented as a separate class to return consumer instances that were previously instantiated in your tests, allowing for a more mock-based approach. Hopefully you found this useful. If you have any questions or feedback, good or bad, I'd be very happy to hear it.
