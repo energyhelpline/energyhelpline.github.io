@@ -11,7 +11,7 @@ tags:
 
 ### Background
 
-Recently I've been using my weekly 20% time to get up to speed on Docker - specifically Docker for Windows. I have another 20% project that has a dependency on RabbitMQ, so I thought it would be nice to be able to leverage Docker to make setup as easy as possible. I ran into a few issues along the way, so I thought I'd share my findings to try to help others avoid the pitfalls that caught me out.
+Recently I've been using my weekly 20% time to get up to speed on Docker - specifically Docker for Windows. I have [another 20% project](http://github.com/ronanmoriarty/cqrs-nu-tutorial) that has a dependency on RabbitMQ, so I thought it would be nice to be able to leverage Docker to make setup as easy as possible. I ran into a few issues along the way, so I thought I'd share my findings to try to help others avoid the pitfalls that caught me out.
 
 ### RabbitMQ on Docker Hub
 
@@ -90,6 +90,7 @@ RUN $path = [Environment]::GetEnvironmentVariable('Path', 'Machine'); \
 RUN rabbitmq-plugins enable rabbitmq_management --offline
 COPY rabbitmq.config C:\\Users\\ContainerAdministrator\\AppData\\Roaming\\RabbitMQ\\rabbitmq.config
 ENTRYPOINT rabbitmq-server
+EXPOSE 5672 15672
 ```
 
 These steps were largely driven by the manual-install steps link above. 
@@ -114,6 +115,8 @@ and placed it alongside my Docker file so that I could just copy it over as anot
 
 The config file format above can apparently be specified more easily as a .conf file using the much simpler sysctl format, but I got various errors trying to get that to work, and didn't consider it a big issue, so I left it in the format above.
 
+#### Installing the RabbitMQ Service
+
 Then, I set the command to run when the container starts, ie. the rabbitmq_server installation batch file, and listed the ports that need to be exposed.
 
 ### Accessing the RabbitMQ Portal from the Host
@@ -121,7 +124,7 @@ Then, I set the command to run when the container starts, ie. the rabbitmq_serve
 With the Docker file building the image as intended now, I could run a container based on that image now:
 
 ```
-docker run  --rm --name rabbitmqtest -p 15672:15672 -t rabbitmq
+docker run  --rm --name rabbitmqtest -p 15672:15672 -p 5672:5672 -t rabbitmq
 ```
 
 Once the console in the container confirmed that the container was up and running, in a separate console window I ran the following:
@@ -133,12 +136,15 @@ docker inspect  rabbitmqtest
 The output of this gave me the IP address of the container that we can then use in a browser on the host:
 http://[container-IP-address]:15672
 
-This showed the RabbitMQ portal. Logging in as "guest" with password "guest" loaded the dashboard:
+This showed the RabbitMQ portal. Logging in as "guest" with password "guest" loaded the dashboard.
 
-![RabbitMQ Management Portal]({{ "/images/rabbitmq-management-portal.png" | absolute_url }})
+
+To test this out properly, running my [CQRSTutorial project](http://github.com/ronanmoriarty/cqrs-nu-tutorial) from my host, I (temporarily) updated its configuration to point at this RabbitMQ server on my container, and took an action that would send a command to Rabbit. The portal shows that the appropriate exchange got created ok and the command message is received:
+
+![RabbitMQ Management Portal]({{ "/images/cafe.waiter.command.service-exchange.png" | absolute_url }})
 
 ### Conclusion
 
-I've learnt quite a lot from this exercise. I've found Docker command line for building images / publishing images, running containers etc. to be very intuitive so far. However I've found the Dockerfile syntax to be a lot more complex - there was a lot of trial and error around escaping backslashes and getting powershell variables / environment variables to evaluate instead of being treated as literal strings - **the key thing I found when working with Docker files is to have a very quick feedback loop so that you can try lots of different things in a very short space of time.** To help with this, I've found when creating Docker files, try to structure your Dockerfile so that the longer and more stable processes happen as early as possible in the Dockerfile - every time you change a command in a Dockerfile, each build step from that point onwards is rebuilt - this means that Docker can't use previously cached intermediate images, and your feedback loop increases significantly, and it takes a lot longer to recover from your mistakes.
+I've learnt quite a lot from this exercise. I've found Docker command line for building images / publishing images, running containers etc. to be very intuitive so far. However I've found the Dockerfile syntax to be a lot more complex - there was a lot of trial and error around escaping backslashes and getting powershell variables / environment variables to evaluate instead of being treated as literal strings - **the key thing I found when working with Docker files is to have a very quick feedback loop so that you can try lots of different things in a very short space of time.** To help with this, I've found when creating Docker files, try to structure your Dockerfile so that the longer and more stable processes happen as early as possible in the Dockerfile - **every time you change a command in a Dockerfile, each build step after that is rebuilt - this means that Docker can't use previously cached intermediate images, and your feedback loop increases significantly**, and it takes a lot longer to recover from your mistakes.
 
 Obviously it would have been better if I didn't have to write the Docker file at all - that's the price I've had to pay by limiting myself to windows containers for now - there's various RabbitMQ images on Docker Hub, but they're all linux-based at the moment. Hopefully they'll fix that soon.
