@@ -143,6 +143,12 @@ To test this out properly, running my [CQRSTutorial project](http://github.com/r
 
 ![RabbitMQ Management Portal]({{ "/images/cafe.waiter.command.service-exchange.png" | absolute_url }})
 
+### Next Steps
+
+This last bit, where I'm updating my application config to point at the currently-running-RabbitMQ-container, obviously isn't a long-term solution - I can't go changing the config every time to match the IP address of my latest container running. But this rough-and-ready approach was enough to let me quickly see that I've got my RabbitMQ container configured correctly.
+
+At this point, I feel I'll probably progress towards using Docker Compose, and host my various CQRSTutorial components in different containers - not just the RabbitMQ server - that will remove the need for having to make manual config changes to point at the appropriate container IP address for the RabbitMQ server.
+
 ### Conclusion
 
 I've learnt quite a lot from this exercise. I've found Docker command line for building images / publishing images, running containers etc. to be very intuitive so far. However I've found the Dockerfile syntax to be a lot more complex - there was a lot of trial and error around escaping backslashes and getting powershell variables / environment variables to evaluate instead of being treated as literal strings - **the key thing I found when working with Docker files is to have a very quick feedback loop so that you can try lots of different things in a very short space of time.** To help with this, I've found when creating Docker files, try to structure your Dockerfile so that the longer and more stable processes happen as early as possible in the Dockerfile - **every time you change a command in a Dockerfile, each build step after that is rebuilt - this means that Docker can't use previously cached intermediate images, and your feedback loop increases significantly**, and it takes a lot longer to recover from your mistakes.
