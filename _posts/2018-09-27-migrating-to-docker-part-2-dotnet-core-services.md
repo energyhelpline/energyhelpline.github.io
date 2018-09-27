@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Docker Migration Example - Part 2: Migrating .NET Core Services"
+title: "Docker Migration Example - Part 2: .NET Core Services"
 author: Ronan Moriarty
 excerpt: With my RabbitMQ and Sql Server instances for my sample application now running in Docker, it was time to move my .NET Core services and website into Docker too.
 ---
