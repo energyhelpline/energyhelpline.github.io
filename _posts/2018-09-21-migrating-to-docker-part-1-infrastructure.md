@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Migrating to Docker - Part 1: Infrastructure"
+title: "Docker Migration Example - Part 1: Infrastructure"
 author: Ronan Moriarty
 excerpt: In the first post in this series, I'll be looking at the overall strategy for migrating different components of a solution to Docker one component at a time, while maintaining confidence that all components still interact correctly. This first post will focus on migrating infrastructural components to Docker - in my case, Sql Server and RabbitMQ.
 ---
@@ -386,4 +386,4 @@ Running "docker-compose up -d" built and started my 3 containers. Then .\Update-
 
 Having now removed the reliance on having a RabbitMQ server or SQL Server instances running on my host, the main barriers to setting up a Development environment were now gone.
 
-Next time, I'll show how I moved my .NET Core services and ASP.NET Core website into Docker containers of their own, so that my whole application, not just the infrastructure, was running in Docker. All code for this project is available [here](https://github.com/ronanmoriarty/CQSplit)
+[Next time]({% post_url 2018-09-27-migrating-to-docker-part-2-dotnet-core-services %}), I'll show how I moved my .NET Core services and ASP.NET Core website into Docker containers of their own, so that my whole application, not just the infrastructure, was running in Docker. All code for this project is available [here](https://github.com/ronanmoriarty/CQSplit)
